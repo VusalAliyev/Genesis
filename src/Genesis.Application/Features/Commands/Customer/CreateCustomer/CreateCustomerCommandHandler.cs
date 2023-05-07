@@ -1,6 +1,8 @@
 ﻿using Genesis.Application.Dtos;
 using Genesis.Infrastructure;
+using Genesis.Infrastructure.Services;
 using MediatR;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
@@ -34,17 +36,19 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
             {
                 {"data",json }
             };
-            var result = await _httpClient.PostAsJsonAsync($"91.102.161.166:5000/predict?data={json}", "");
+            var result = await _httpClient.PostAsJsonAsync($"91.102.161.166:5000/predict?data={dict["data"]}", "");
             var resultString = await result.Content.ReadAsStringAsync();
             var responseSuccess = JsonSerializer.Deserialize<int>(resultString);
             if (responseSuccess == 1)
             {
+                EmailService.SendEmail("huseynma@code.edu.az", "<h4>Təbriklər siz kredit üçün müraciətiniz qeydə alındı.</h4>");
                 await _context.Customers.AddAsync(data);
                 _context.SaveChanges();
                 return TResponse<CreateCustomerCommandResponse>.Success(200);
             }
             else
             {
+                EmailService.SendEmail("huseynma@code.edu.az", "<h4>Təəssüfki siz kredit götürə bilməssiniz</h4>");
                 return TResponse<CreateCustomerCommandResponse>.Fail("Kredit şərtlərinə uyğun deyilsiz", 400);
             }
         }
