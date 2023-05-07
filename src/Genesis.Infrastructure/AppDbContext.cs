@@ -9,5 +9,6 @@ namespace Genesis.Infrastructure
 
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CreditDetail> CreditDetails { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
