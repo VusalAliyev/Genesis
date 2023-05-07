@@ -19,7 +19,22 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
 
         public async Task<CreateCustomerCommandResponse> Handle(CreateCustomerCommandRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            await _context.Customers.AddAsync(new()
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Age = request.Age,
+                Salary = request.Salary,
+                CreditDetailId = request.CreditDetailId,
+                EmploymentTime = request.EmploymentTime,
+                HomeOwnership= request.HomeOwnership,
+            });
+            _context.SaveChanges();
+
+            return new CreateCustomerCommandResponse
+            {
+                IsSuccess = true
+            };
         }
     }
 }
