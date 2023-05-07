@@ -15,18 +15,18 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
 
         public async Task<TResponse<CreateCustomerCommandResponse>> Handle(CreateCustomerCommandRequest request, CancellationToken cancellationToken)
         {
-            await _context.Customers.AddAsync(new()
+            await _context.Customers.AddAsync(new Domain.Entities.Customer
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Age = request.Age,
-                Salary = request.Salary,
-                CreditDetailId = request.CreditDetailId,
-                EmploymentTime = request.EmploymentTime,
-                HomeOwnership = request.HomeOwnership,
+                FirstName = request.Customer.FirstName,
+                LastName = request.Customer.LastName,
+                Age = request.Customer.Age,
+                Salary = request.Customer.Salary,
+                EmploymentTime = request.Customer.EmploymentTime,
+                HomeOwnership = request.Customer.HomeOwnership,
+                CreditDetail = request.Customer.CreditDetail
             });
-            _context.SaveChanges();
 
+            _context.SaveChanges();
             return TResponse<CreateCustomerCommandResponse>.Success(200);
         }
     }
