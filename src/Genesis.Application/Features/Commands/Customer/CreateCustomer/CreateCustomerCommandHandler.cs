@@ -1,4 +1,5 @@
-﻿using Genesis.Infrastructure;
+﻿using Genesis.Application.Dtos;
+using Genesis.Infrastructure;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
 {
-    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommandRequest, CreateCustomerCommandResponse>
+    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommandRequest, TResponse<CreateCustomerCommandResponse>>
     {
         private readonly AppDbContext _context;
 
@@ -17,7 +18,7 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
             _context = context;
         }
 
-        public async Task<CreateCustomerCommandResponse> Handle(CreateCustomerCommandRequest request, CancellationToken cancellationToken)
+        public async Task<TResponse<CreateCustomerCommandResponse>> Handle(CreateCustomerCommandRequest request, CancellationToken cancellationToken)
         {
             await _context.Customers.AddAsync(new()
             {
@@ -31,10 +32,7 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
             });
             _context.SaveChanges();
 
-            return new CreateCustomerCommandResponse
-            {
-                IsSuccess = true
-            };
+            return TResponse<CreateCustomerCommandResponse>.Success("",200);
         }
     }
 }

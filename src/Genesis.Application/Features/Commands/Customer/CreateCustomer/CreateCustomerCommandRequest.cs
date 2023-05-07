@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Genesis.Application.Dtos;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
 {
-    public class CreateCustomerCommandRequest:IRequest<CreateCustomerCommandResponse>
+    public class CreateCustomerCommandRequest:IRequest<TResponse<CreateCustomerCommandResponse>>
     {
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
