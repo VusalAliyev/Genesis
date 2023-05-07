@@ -18,7 +18,7 @@ namespace Genesis.WebApi.Controllers
             EmailService.SendEmail(confirmation.Email, otpContent);
             Response.Cookies.Append($"{confirmation.FinCode}", otp);
 
-            return Ok(TResponse<string>.Success(otp, 200));
+            return Ok(TResponse<string>.Success(200));
         }
 
         [HttpPost("confirmOtp")]
@@ -28,7 +28,7 @@ namespace Genesis.WebApi.Controllers
 
             if (otpCode == null)
             {
-                return Ok(TResponse<string>.Fail("OTP code not found!", 404));
+                return Ok(TResponse<string>.Fail("Finkoda aid kod tapılmadı.", 404));
             }
 
             if (otp == otpCode)
@@ -37,7 +37,7 @@ namespace Genesis.WebApi.Controllers
             }
             else
             {
-                return Ok(TResponse<string>.Fail("OTP code is not correct!", 400));
+                return Ok(TResponse<string>.Fail("Kod düzgün deyil.", 400));
             }
         }
     }
