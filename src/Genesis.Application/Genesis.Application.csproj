@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Dtos\" />
-    <Folder Include="Features\Commands\" />
   </ItemGroup>
 
 </Project>
