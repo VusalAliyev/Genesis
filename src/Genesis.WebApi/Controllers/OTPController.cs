@@ -24,6 +24,7 @@ namespace Genesis.WebApi.Controllers
         [HttpPost("confirmOtp")]
         public IActionResult ConfirmOtp(string otp, string finCode)
         {
+
             string otpCode = Request.Cookies[$"{finCode}"];
 
             if (otpCode == null)

@@ -1,11 +1,6 @@
 ﻿using Genesis.Application.Dtos;
 using Genesis.Infrastructure;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
 {
@@ -28,11 +23,11 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
                 Salary = request.Salary,
                 CreditDetailId = request.CreditDetailId,
                 EmploymentTime = request.EmploymentTime,
-                HomeOwnership= request.HomeOwnership,
+                HomeOwnership = request.HomeOwnership,
             });
             _context.SaveChanges();
 
-            return TResponse<CreateCustomerCommandResponse>.Success("",200);
+            return TResponse<CreateCustomerCommandResponse>.Success(200);
         }
     }
 }
