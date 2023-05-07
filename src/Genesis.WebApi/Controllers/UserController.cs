@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Genesis.Application.Dtos;
+using Genesis.Application.Features.Queries.User.GetUser;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Genesis.WebApi.Controllers
 {
@@ -6,12 +9,18 @@ namespace Genesis.WebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult GetUser(string finCode)
+        private readonly IMediator _mediator;
+
+        public UserController(IMediator mediator)
         {
+            _mediator = mediator;
+        }
 
-
-            return Ok();
+        [HttpGet]
+        public async Task<IActionResult> GetUser([FromQuery] GetUserQueryRequest requestModel)
+        {
+            TResponse<GetUserQueryResponse> user = await _mediator.Send(requestModel);
+            return Ok(user);
         }
     }
 }
