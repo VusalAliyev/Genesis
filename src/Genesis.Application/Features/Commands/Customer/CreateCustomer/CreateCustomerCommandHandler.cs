@@ -1,6 +1,7 @@
 ﻿using Genesis.Application.Dtos;
 using Genesis.Infrastructure;
 using MediatR;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
@@ -19,9 +20,9 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
         {
             var data = new Domain.Entities.Customer
             {
-                FirstName = request.Customer.FirstName,
-                LastName = request.Customer.LastName,
-                Age = request.Customer.Age,
+                FullName = request.Customer.FullName,
+                BrithDate = request.Customer.BrithDate,
+                Age = DateTime.Now.Year - request.Customer.BrithDate.Year,
                 Salary = request.Customer.Salary,
                 EmploymentTime = request.Customer.EmploymentTime,
                 HomeOwnership = request.Customer.HomeOwnership,
@@ -34,14 +35,20 @@ namespace Genesis.Application.Features.Commands.Customer.CreateCustomer
             {
                 {"data",json }
             };
-            var result = await _httpClient.PostAsJsonAsync($"91.102.161.166:5000/predict?data={json}", "");
+            var result = await _httpClient.PostAsJsonAsync("http://91.102.161.166:5000/predict?data=" + dict["data"], "");
             var resultString = await result.Content.ReadAsStringAsync();
-            var responseSuccess = JsonSerializer.Deserialize<int>(resultString);
-            if (responseSuccess == 1)
+
+
+            var responseSuccess = JsonSerializer.Deserialize<CreateCustomerCommandResponse>(resultString);
+            if (responseSuccess.result == 1)
             {
                 await _context.Customers.AddAsync(data);
                 _context.SaveChanges();
-                return TResponse<CreateCustomerCommandResponse>.Success(200);
+                return TResponse<CreateCustomerCommandResponse>.Success(new CreateCustomerCommandResponse
+                {
+                    result = responseSuccess.result,
+                    FullName = data.FullName
+                }, 200);
             }
             else
             {
