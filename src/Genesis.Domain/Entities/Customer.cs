@@ -6,7 +6,6 @@ public class Customer : BaseEntity
 {
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
-    public string FinCode { get; set; } = null!;
     public int Age { get; set; }
     public float Salary { get; set; }
     public string HomeOwnership { get; set; } = null!; // ev sahibliyi 
