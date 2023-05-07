@@ -2,11 +2,6 @@
 using Genesis.Application.Dtos;
 using Genesis.Infrastructure;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Genesis.Application.Features.Queries.User.GetUser
 {
@@ -26,7 +21,14 @@ namespace Genesis.Application.Features.Queries.User.GetUser
             var user = _context.Users.FirstOrDefault(p => p.FinCode == request.FinCode);
             if (user != null)
             {
-                return TResponse<GetUserQueryResponse>.Success(_mapper.Map<GetUserQueryResponse>(user), 200);
+                return TResponse<GetUserQueryResponse>.Success(new GetUserQueryResponse
+                {
+                    Id = user.Id,
+                    Age = user.Age,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    FinCode = user.FinCode,
+                }, 200);
             }
             else
             {
