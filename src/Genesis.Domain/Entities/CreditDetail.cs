@@ -10,4 +10,5 @@ public class CreditDetail : BaseAuditableEntity
     public int CreditRate { get; set; } // kredit orani
     public float LoanRate { get; set; } // musterinin muraciet etdiyi kiredit faizi
     public int CreditStatus { get; set; } // credit status
+    public int CustomerId { get; set; }
 }
