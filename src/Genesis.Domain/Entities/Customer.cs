@@ -11,6 +11,6 @@ public class Customer : BaseEntity
     public float Salary { get; set; }
     public string HomeOwnership { get; set; } = null!; // ev sahibliyi 
     public float EmploymentTime { get; set; } // is vaxti 
-    public int? CreditDetailId { get; set; }
+    public int CreditDetailId { get; set; }
     public CreditDetail? CreditDetail { get; set; }
 }
