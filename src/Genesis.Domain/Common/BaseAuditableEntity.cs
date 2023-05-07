@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Genesis.Domain.Common
+﻿namespace Genesis.Domain.Common
 {
-    public abstract class BaseAuditableEntity
+    public abstract class BaseAuditableEntity : BaseEntity
     {
         public DateTime Created { get; set; }
 
