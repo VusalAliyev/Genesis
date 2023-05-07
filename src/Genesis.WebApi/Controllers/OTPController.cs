@@ -1,4 +1,5 @@
-﻿using Genesis.Infrastructure.Dto;
+﻿using Genesis.Application.Dtos;
+using Genesis.Infrastructure.Dto;
 using Genesis.Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,7 @@ namespace Genesis.WebApi.Controllers
             EmailService.SendEmail(confirmation.Email, otpContent);
             Response.Cookies.Append($"{confirmation.FinCode}", otp);
 
-            return Ok(otp);
+            return Ok(TResponse<string>.Success(200));
         }
 
         [HttpPost("confirmOtp")]
@@ -27,16 +28,16 @@ namespace Genesis.WebApi.Controllers
 
             if (otpCode == null)
             {
-                throw new Exception();
+                return Ok(TResponse<string>.Fail("Finkoda aid kod tapılmadı.", 404));
             }
 
             if (otp == otpCode)
             {
-                return Ok("Success");
+                return Ok(TResponse<string>.Success(200));
             }
             else
             {
-                throw new Exception("Code is not correct!");
+                return Ok(TResponse<string>.Fail("Kod düzgün deyil.", 400));
             }
         }
     }
